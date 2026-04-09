@@ -1,53 +1,147 @@
-# PyPI Package Scraper
+# 🐍 PyPI Package Scraper
 
-## Overview
-
-This project is a Python-based tool designed to retrieve the latest version of a package from the Python Package Index (PyPI), download the package, and extract its dependencies for analysis.
+A Python-based tool that retrieves the latest version of a package from PyPI, downloads it, and extracts its dependencies for analysis.
 
 ---
 
-## How It Works
+## 🚀 Features
 
-1. Fetch Package Information  
-   The script queries the PyPI JSON API to obtain metadata for the given package, including the latest available version.
-
-2. Select and Download Package  
-   The tool selects a downloadable file, prioritizing `.whl` (wheel) format and falling back to `.tar.gz` if necessary. The package is then downloaded using a streaming approach.
-
-3. Extract Package Contents  
-   - `.whl` and `.zip` files are extracted using the `zipfile` module  
-   - `.tar.gz` files are extracted using the `tarfile` module  
-
-4. Extract Dependencies  
-   The script parses dependency information from:
-   - `METADATA` or `PKG-INFO` files (primary source)  
-   - `requirements.txt` (fallback source)  
-
-5. Output  
-   The final output includes the package name, version, and a structured list of dependencies.
+- 🔍 Fetches latest package version from PyPI
+- 📦 Downloads package (`.whl` or `.tar.gz`)
+- 📂 Extracts package contents safely
+- 🧩 Parses dependencies from:
+  - `METADATA` / `PKG-INFO`
+  - `requirements.txt` (fallback)
+- ⚠️ Handles errors (network issues, missing files, unsupported formats)
 
 ---
 
-## Security Perspective
+## 📌 Use Case
 
-This tool can be used to support security analysis of Python packages by:
-
-- Inspecting package metadata before installation  
-- Identifying external dependencies that may introduce risk  
-- Supporting supply chain security analysis  
-- Assisting in the detection of potentially malicious or suspicious packages  
-
-It provides a foundation for further enhancements such as vulnerability scanning and behavioral analysis.
+This tool is useful for:
+- Dependency analysis
+- Supply chain security research
+- Malware inspection in Python packages
+- Automation in DevSecOps pipelines
 
 ---
 
-## Error Handling
+## 🛠️ Installation
 
-The script includes handling for common failure scenarios:
+```bash
+pip install requests
+```
 
-- Invalid or non-existent package names  
-- Network errors or timeouts during API calls and downloads  
-- Missing metadata files within the package  
-- Unsupported or unexpected file formats  
+---
 
-Exceptions are managed to ensure the program fails gracefully and provides meaningful error messages.
+## ▶️ Usage
+
+```bash
+python pypiscrapper.py
+```
+
+### Input
+
+```bash
+Enter package name: requests
+```
+
+### Output
+
+```bash
+Package: requests
+Version: 2.x.x
+Dependencies:
+ - certifi
+ - urllib3
+ - charset-normalizer
+```
+
+---
+
+## ⚙️ How It Works
+
+1. **Fetch Package Info**
+   - Uses PyPI JSON API:
+   ```
+   https://pypi.org/pypi/<package>/json
+   ```
+
+2. **Select Download File**
+   - Prefers `.whl` (wheel)
+   - Falls back to `.tar.gz`
+
+3. **Download Package**
+   - Streams file to avoid memory issues
+
+4. **Extract Files**
+   - Uses:
+     - `zipfile` for `.whl`
+     - `tarfile` for `.tar.gz`
+
+5. **Parse Dependencies**
+   - Primary: `METADATA` / `PKG-INFO`
+   - Fallback: `requirements.txt`
+
+---
+
+## 📂 Project Structure
+
+```
+pypiscrapper.py
+README.md
+```
+
+---
+
+## ⚠️ Error Handling
+
+The script handles:
+- ❌ Invalid package names
+- 🌐 Network timeouts
+- 📦 Unsupported file formats
+- 📄 Missing metadata files
+
+---
+
+## 🔐 Security Perspective
+
+This tool can be extended for:
+- Malicious package detection
+- Dependency risk scoring
+- Static analysis of packages
+- Supply chain attack prevention
+
+---
+
+## 🔧 Future Improvements
+
+- 🔁 Recursive dependency resolution
+- 📊 Dependency tree visualization
+- 🚨 CVE/Vulnerability integration
+- ⚡ Parallel processing for bulk scanning
+- 🌐 REST API interface
+
+---
+
+## 🤝 Contributing
+
+Feel free to fork and improve the project:
+- Add new parsing methods
+- Improve detection capabilities
+- Optimize performance
+
+---
+
+## 📜 License
+
+This project is for educational and research purposes.
+
+---
+
+## 👨‍💻 Author
+
+Developed as part of a security-focused assignment to demonstrate:
+- Python development
+- Package ecosystem understanding
+- Security analysis mindset
